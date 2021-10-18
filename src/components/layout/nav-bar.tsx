@@ -20,7 +20,7 @@ export default function NavBar() {
       zIndex="sticky"
     >
       <Flex h="16" alignItems="center" justifyContent="space-between">
-        <Image src={logo} h="12" />
+        <Image src={logo} h="12" alt="rick and morty logo"/>
         <Button
           aria-label={colorMode === 'light' ? 'Dark Mode' : 'Light Mode'}
           onClick={toggleColorMode}
