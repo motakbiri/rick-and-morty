@@ -1,0 +1,20 @@
+{
+  "files": {
+    ".replit": [
+      {
+        "id": "2f1c04b4-de1b-4bba-beed-9ae0d87320d9",
+        "line": 1,
+        "version": 1,
+        "index": 0
+      }
+    ],
+    "src/vite-env.d.ts": [
+      {
+        "id": "34684b09-bce0-48be-880e-7acf51369d00",
+        "line": 1,
+        "version": 1,
+        "index": 0
+      }
+    ]
+  }
+}
