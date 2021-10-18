@@ -1,30 +1,45 @@
-import React, { useState,useEffect } from 'react';
-import {Center, SimpleGrid, Box } from '@chakra-ui/react';
-import { useQuery,useQueryClient } from 'react-query';
+import React, { useState, useEffect } from 'react';
+import { Center, SimpleGrid, Box } from '@chakra-ui/react';
+import { useQuery, useQueryClient } from 'react-query';
 import { fetchCharacters } from '../api/queries';
 import { CharacterItem, Pagination, Loading } from '../components/common';
 export default function Characters() {
   const queryClient = useQueryClient();
   const [page, setPage] = useState(1);
-  const { status, data} = useQuery(['characters', page], ()=>fetchCharacters(page), { keepPreviousData : true });
+  const { status, data } = useQuery(
+    ['characters', page],
+    () => fetchCharacters(page),
+    { keepPreviousData: true },
+  );
 
-  // // Prefetch the next page!
+  // Prefetch the next page
   useEffect(() => {
     if (data?.info?.next) {
-      console.log('prefetch')
-      queryClient.prefetchQuery(["characters", page + 1], () =>
-        fetchCharacters(page + 1)
+      console.log('prefetching page ', page + 1);
+      queryClient.prefetchQuery(['characters', page + 1], () =>
+        fetchCharacters(page + 1),
       );
     }
   }, [data, page, queryClient]);
 
-  if (status === 'loading') return <Center h="80"><Loading/></Center>;
-  if (status === 'error') return <p>Error :(</p>;
-  console.log(page)
+  if (status === 'loading')
+    return (
+      <Center h="80">
+        <Loading />
+      </Center>
+    );
+  if (status === 'error')
+    return (
+      <p>
+        You’re not gonna believe this, because it usually never happens, but I
+        made a mistake. <br />
+        -Rick
+      </p>
+    );
   const { results, info } = data;
 
-  const handleBack = () => setPage(page => Math.max(page - 1, 1))
-  const handleNext = () => setPage(page => Math.min(page + 1, info.pages));
+  const handleBack = () => setPage((page) => Math.max(page - 1, 1));
+  const handleNext = () => setPage((page) => Math.min(page + 1, info.pages));
 
   return (
     <Box p="8" alignItems="center">

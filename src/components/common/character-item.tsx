@@ -1,18 +1,20 @@
 import React from 'react';
-
 import {
-  Tag, useColorModeValue, Text, Stack, Image, Popover, Button,
-  Box,
+  Tag,
+  useColorModeValue,
+  Text,
+  Stack,
+  Image,
+  Popover,
+  Button,
   PopoverTrigger,
   PopoverContent,
-  PopoverHeader,
   PopoverBody,
-  PopoverFooter,
-  PopoverArrow,
   PopoverCloseButton,
-  useToast
+  useToast,
 } from '@chakra-ui/react';
-import { InfoOutlineIcon } from '@chakra-ui/icons'
+import { InfoOutlineIcon } from '@chakra-ui/icons';
+import {FALLBACK_IMAGE} from '../../constants'
 
 type CharacterItemType = {
   name: string;
@@ -27,23 +29,20 @@ type CharacterItemType = {
 };
 
 const CharacterItem = (props: CharacterItemType) => {
-
-  const toast = useToast()
+  const toast = useToast();
 
   const { name, status, species, gender, image, location, episode } = props;
 
-
   const handleEpisodeClick = () => {
-        toast.closeAll()
-        toast({
-          title: "Coming Soon!",
-          description: "Episodes are currently under development.",
-          status: "info",
-          duration: 5000,
-          isClosable: true,
-        })
-        }
-
+    toast.closeAll();
+    toast({
+      title: 'Coming Soon!',
+      description: 'Episodes are currently under development.',
+      status: 'info',
+      duration: 5000,
+      isClosable: true,
+    });
+  };
 
   return (
     <Stack
@@ -61,6 +60,7 @@ const CharacterItem = (props: CharacterItemType) => {
         objectFit="cover"
         src={image}
         alt={name}
+        fallbackSrc={FALLBACK_IMAGE}
       />
       <Text pt="4" fontSize="2xl" fontWeight="500">
         {name}
@@ -93,22 +93,25 @@ const CharacterItem = (props: CharacterItemType) => {
       </Text>
       <Popover>
         <PopoverTrigger>
-          <Button variant="ghost" leftIcon={<InfoOutlineIcon />}>Episodes</Button>
+          <Button variant="ghost" leftIcon={<InfoOutlineIcon />}>
+            Episodes
+          </Button>
         </PopoverTrigger>
         <PopoverContent bg={useColorModeValue('gray.100', 'gray.900')}>
           <PopoverCloseButton />
           <PopoverBody>
-
-            {
-              episode.map((item) => {
-                const episodeNumber = item.split("/").pop();
-                return (<Button key={episodeNumber} variant="link"
-                onClick={handleEpisodeClick}>{episodeNumber}
-                </Button>)
-                
-              })
-            }
-
+            {episode.map((item) => {
+              const episodeNumber = item.split('/').pop();
+              return (
+                <Button
+                  key={episodeNumber}
+                  variant="link"
+                  onClick={handleEpisodeClick}
+                >
+                  {episodeNumber}
+                </Button>
+              );
+            })}
           </PopoverBody>
         </PopoverContent>
       </Popover>
