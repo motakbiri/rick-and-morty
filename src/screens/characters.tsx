@@ -1,13 +1,24 @@
-import React, { useState } from 'react';
-import { SimpleGrid, Box } from '@chakra-ui/react';
-import { useQuery } from 'react-query';
+import React, { useState,useEffect } from 'react';
+import {Center, SimpleGrid, Box } from '@chakra-ui/react';
+import { useQuery,useQueryClient } from 'react-query';
 import { fetchCharacters } from '../api/queries';
-import { CharacterItem, Pagination } from '../components/common';
+import { CharacterItem, Pagination, Loading } from '../components/common';
 export default function Characters() {
+  const queryClient = useQueryClient();
   const [page, setPage] = useState(1);
-  const { status, data= {}, isFetching, isPreviousData } = useQuery(['characters', page], ()=>fetchCharacters(page), { keepPreviousData : true });
+  const { status, data} = useQuery(['characters', page], ()=>fetchCharacters(page), { keepPreviousData : true });
 
-  if (status === 'loading') return <p>Loading...</p>;
+  // // Prefetch the next page!
+  useEffect(() => {
+    if (data?.info?.next) {
+      console.log('prefetch')
+      queryClient.prefetchQuery(["characters", page + 1], () =>
+        fetchCharacters(page + 1)
+      );
+    }
+  }, [data, page, queryClient]);
+
+  if (status === 'loading') return <Center h="80"><Loading/></Center>;
   if (status === 'error') return <p>Error :(</p>;
   console.log(page)
   const { results, info } = data;

@@ -15,9 +15,8 @@ const Pagination = (props: PaginationType) => {
 
   return (
     <Center direction="row" py={12} justify="center">
-      { true && (
+      
         <Button
-          color={useColorModeValue('brand.100', 'brand.200')}
           casing="capitalize"
           disabled={current === 1}
           leftIcon={<ArrowBackIcon />}
@@ -25,11 +24,10 @@ const Pagination = (props: PaginationType) => {
         >
         Back
         </Button>
-      )}
-      <Text px="4">{current}</Text>
-      { true && (
+      
+      <Text fontWeight="bold" px="4">{current}</Text>
+      
         <Button
-          color={useColorModeValue('brand.100', 'brand.200')}
           casing="capitalize"
           disabled={current === total}
           rightIcon={<ArrowForwardIcon />}
@@ -37,7 +35,6 @@ const Pagination = (props: PaginationType) => {
         >
           Next 
         </Button>
-      )}
     </Center>
   );
 };
