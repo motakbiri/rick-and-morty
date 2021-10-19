@@ -22,7 +22,7 @@ export default function Characters() {
     }
   }, [data, page, queryClient]);
 
-  if ('loading' === 'loading')
+  if (status === 'loading')
     return (
       <Center h="80">
         <Loading />
