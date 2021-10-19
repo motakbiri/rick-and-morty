@@ -10,7 +10,7 @@ const Loading = () => {
   const prefersReducedMotion = usePrefersReducedMotion();
   const animation = prefersReducedMotion
     ? undefined
-    : `${spin} infinite 2s linear`;
+    : `${spin} infinite 2.3s linear`;
   return <Image maxH="60" animation={animation} src={logo} />;
 };
 
